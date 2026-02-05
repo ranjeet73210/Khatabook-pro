@@ -793,6 +793,9 @@ tbody td {
   <p>Loading…</p>
 </div>
 
+<!-- Persistent iframe for Google Apps Script communication -->
+<iframe name="gasFrame" style="display:none;"></iframe>
+
 <!-- ============================================================
      SCREEN 1 — LOGIN
      ============================================================ -->
@@ -1330,18 +1333,68 @@ tbody td {
 // ================================================================
 // API CALL WRAPPER
 // ================================================================
-const API_URL = "https://script.google.com/macros/s/AKfycbwQipB2yyGa-3Xd1PbrkicSkAggYQ8q2pzMY6GDHgACi972_mzwUaNwGF1mAj7TcKCv/exec";
+// Replace this URL with your deployed Google Apps Script Web App URL
+const API_URL = "https://script.google.com/macros/s/AKfycbwgF1YKPn9em-R6erkdIPpxt94i1PUtB_TvPxtyUkxRfuusOXIwkfFkHlNmIds8bABUFQ/exec";
 
 // Modified to connect to deployed Apps Script Web App
+function apiCall(payload) {
+  return new Promise((resolve, reject) => {
+    const id = 'req_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = API_URL;
+    form.target = "gasFrame";
+    form.enctype = 'application/x-www-form-urlencoded';
+    const inputPayload = document.createElement('input');
+    inputPayload.type = 'hidden';
+    inputPayload.name = 'payload';
+    inputPayload.value = JSON.stringify(payload);
+    const inputPM = document.createElement('input');
+    inputPM.type = 'hidden';
+    inputPM.name = 'postMessage';
+    inputPM.value = '1';
+    const inputReq = document.createElement('input');
+    inputReq.type = 'hidden';
+    inputReq.name = 'requestId';
+    inputReq.value = id;
+    const inputOrigin = document.createElement('input');
+    inputOrigin.type = 'hidden';
+    inputOrigin.name = 'origin';
+    inputOrigin.value =  "*";
+    form.appendChild(inputPayload);
+    form.appendChild(inputPM);
+    form.appendChild(inputReq);
+    form.appendChild(inputOrigin);
+    document.body.appendChild(form);
+    let done = false;
+    function cleanup() {
+      if (form.parentNode) form.parentNode.removeChild(form);
+      window.removeEventListener('message', onMessage);
+    }
+    function onMessage(ev) {
+      let data = ev.data;
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          return;
+        }
+      }
+      if (data && data.id === id) {
+        done = true;
+        cleanup();
+        resolve(data.data);
+      }
+    }
 
-async function apiCall(data) {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    window.addEventListener('message', onMessage);
+    const timer = setTimeout(() => {
+      if (done) return;
+      cleanup();
+      reject(new Error('Network error.'));
+    }, 200);
+    form.submit();
   });
-
-  return await res.json();
 }
 
 let appState = {
@@ -2101,8 +2154,8 @@ document.getElementById('btn-admin-export').addEventListener('click', () => {
     return;
   }
 
-  // 2. Format data for Excel
-  const exportData = list.map(t => ({
+  // 2. Format data for Excel (reverse to match table order: newest first)
+  const exportData = list.slice().reverse().map(t => ({
     Date: t.date,
     User: t.user,
     Item: t.item_name,
