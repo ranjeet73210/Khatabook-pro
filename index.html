@@ -1366,18 +1366,20 @@ function apiCall(payload) {
     addField("origin", window.location.origin);
 
     function onMessage(e) {
-      if (!e.origin.includes("googleusercontent.com")) return;
-
       let msg = e.data;
+    
       try {
-        if (typeof msg === "string") msg = JSON.parse(msg);
-      } catch (_) { return; }
-
-      if (msg.requestId === requestId) {
-        window.removeEventListener("message", onMessage);
+        if (typeof msg === 'string') msg = JSON.parse(msg);
+      } catch (_) {
+        return;
+      }
+    
+      if (msg && msg.requestId == id) {
+        window.removeEventListener('message', onMessage);
         resolve(msg.data);
       }
     }
+
 
     window.addEventListener("message", onMessage);
 
