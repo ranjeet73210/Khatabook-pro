@@ -8,21 +8,11 @@
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
-  <!-- SheetJS for Excel Export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-/* ============================================================
-   KHATABOOK WEB APP — GLOBAL STYLES
-   Single-file SPA. Screens toggled via .screen class.
-   Design: Refined fintech aesthetic — warm neutrals, deep teal accent,
-   clean typography, soft card shadows, subtle grain texture.
-   ============================================================ */
-
-/* --------- CSS RESET & VARIABLES --------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Palette */
   --clr-bg:          #f0ece6;
   --clr-bg-warm:     #e8e2d9;
   --clr-card:        #ffffff;
@@ -43,12 +33,8 @@
   --clr-sidebar:     #1a2332;
   --clr-sidebar-hover:#253447;
   --clr-sidebar-text:#c4cdd8;
-
-  /* Typography */
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body:    'DM Sans', system-ui, sans-serif;
-
-  /* Spacing */
   --radius:  12px;
   --radius-sm: 8px;
   --shadow:  0 2px 16px rgba(0,0,0,.07);
@@ -64,7 +50,6 @@ body {
   color: var(--clr-text);
   min-height: 100vh;
   overflow-x: hidden;
-  /* subtle linen grain */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
 }
 
@@ -73,7 +58,6 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 input, select, textarea { font-family: inherit; outline: none; }
 img { max-width: 100%; }
 
-/* --------- UTILITY --------- */
 .hidden { display: none !important; }
 .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0; }
 
@@ -90,7 +74,6 @@ img { max-width: 100%; }
 .badge-user    { background: var(--clr-success-bg);   color: var(--clr-success); }
 .badge-danger  { background: var(--clr-danger-bg);    color: var(--clr-danger); }
 
-/* --------- TOAST --------- */
 #toast-container {
   position: fixed;
   top: 24px;
@@ -121,7 +104,6 @@ img { max-width: 100%; }
 .toast .toast-icon { font-size: 1.1rem; flex-shrink: 0; }
 @keyframes slideIn { from { transform: translateX(110%); opacity:0; } to { transform: translateX(0); opacity:1; } }
 
-/* --------- MODAL --------- */
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(26,35,50,.55);
@@ -164,13 +146,9 @@ img { max-width: 100%; }
 @keyframes popIn { from { transform: scale(.88); opacity:0; } to { transform: scale(1); opacity:1; } }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-/* --------- SCREEN SWITCHER --------- */
 .screen { display: none; min-height: 100vh; }
 .screen.active { display: flex; }
 
-/* ============================================================
-   LOGIN SCREEN
-   ============================================================ */
 #screen-login {
   flex-direction: column;
   align-items: center;
@@ -179,7 +157,6 @@ img { max-width: 100%; }
   position: relative;
   overflow: hidden;
 }
-/* decorative blobs */
 #screen-login::before, #screen-login::after {
   content: '';
   position: absolute;
@@ -289,15 +266,11 @@ img { max-width: 100%; }
 .btn-login.loading .btn-spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ============================================================
-   APP LAYOUT (Sidebar + Main)
-   ============================================================ */
 .app-layout {
   display: flex;
   min-height: 100vh;
 }
 
-/* --- SIDEBAR --- */
 .sidebar {
   width: 250px;
   background: var(--clr-sidebar);
@@ -380,7 +353,6 @@ img { max-width: 100%; }
 }
 .btn-logout:hover { background: rgba(220,53,69,.28); }
 
-/* --- MAIN CONTENT AREA --- */
 .main-content {
   margin-left: 250px;
   flex: 1;
@@ -389,7 +361,6 @@ img { max-width: 100%; }
   transition: margin-left .3s ease;
 }
 
-/* --- TOPBAR (mobile) --- */
 .topbar {
   display: none;
   position: fixed;
@@ -421,7 +392,6 @@ img { max-width: 100%; }
   font-size: .82rem;
 }
 
-/* Sidebar overlay (mobile) */
 .sidebar-overlay {
   display: none;
   position: fixed; inset: 0;
@@ -429,7 +399,6 @@ img { max-width: 100%; }
   z-index: 99;
 }
 
-/* --------- PAGE HEADER --------- */
 .page-header {
   display: flex;
   align-items: flex-start;
@@ -445,7 +414,6 @@ img { max-width: 100%; }
 }
 .page-header p { color: var(--clr-text-mid); font-size: .88rem; margin-top: 3px; }
 
-/* --------- BUTTONS --------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -481,7 +449,6 @@ img { max-width: 100%; }
   border-radius: 8px;
 }
 
-/* --------- STAT CARDS --------- */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -534,7 +501,6 @@ img { max-width: 100%; }
   z-index: 1;
 }
 
-/* --------- FORM STYLES --------- */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -571,7 +537,6 @@ img { max-width: 100%; }
 .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235c5c5c' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
 .modal-actions { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; }
 
-/* --------- CARD CONTAINER --------- */
 .card {
   background: var(--clr-card);
   border-radius: 16px;
@@ -591,7 +556,6 @@ img { max-width: 100%; }
 .card-header h3 { font-size: 1rem; font-weight: 600; }
 .card-body { padding: 18px 22px; }
 
-/* --------- SEARCH / FILTER BAR --------- */
 .filter-bar {
   display: flex;
   gap: 10px;
@@ -625,7 +589,6 @@ img { max-width: 100%; }
   pointer-events: none;
 }
 
-/* --------- TABLE --------- */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table {
   width: 100%;
@@ -659,7 +622,6 @@ tbody td {
 }
 .actions-cell { display: flex; gap: 6px; }
 
-/* --------- EMPTY STATE --------- */
 .empty-state {
   text-align: center;
   padding: 52px 20px;
@@ -668,7 +630,6 @@ tbody td {
 .empty-state h4 { font-size: 1.05rem; margin-bottom: 6px; }
 .empty-state p { color: var(--clr-text-light); font-size: .87rem; max-width: 300px; margin: 0 auto; }
 
-/* --------- USER LIST (admin) --------- */
 .user-list { display: flex; flex-direction: column; gap: 10px; }
 .user-item {
   display: flex;
@@ -694,16 +655,12 @@ tbody td {
 .user-item-info h5 { font-size: .92rem; font-weight: 600; }
 .user-item-info .badge { margin-left: 8px; }
 
-/* --------- SECTION PAGES (tab content) --------- */
 .tab-page { display: none; }
 .tab-page.active { display: block; animation: fadeUp .3s ease; }
 @keyframes fadeUp { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
 
-/* ============================================================
-   RESPONSIVE — MOBILE
-   ============================================================ */
 @media (max-width: 768px) {
-  .main-content { margin-left: 0; padding: 78px 16px 80px; } /* Added bottom padding for mobile */
+  .main-content { margin-left: 0; padding: 78px 16px 80px; }
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .topbar { display: flex; }
@@ -715,7 +672,6 @@ tbody td {
   .login-card { padding: 34px 24px 30px; }
   .page-header { flex-direction: column; }
   
-  /* Mobile Tables -> Cards */
   thead { display: none; }
   tbody tr { 
     display: block; 
@@ -747,7 +703,6 @@ tbody td {
   }
   .actions-cell { justify-content: flex-end; }
   
-  /* Modals on mobile */
   .modal { 
     width: 100%; 
     max-width: 100%; 
@@ -765,7 +720,6 @@ tbody td {
   .stat-card .stat-value { font-size: 1.35rem; }
 }
 
-/* -- loading spinner full page -- */
 .page-loader {
   position: fixed; inset: 0;
   background: var(--clr-bg);
@@ -785,23 +739,13 @@ tbody td {
 </head>
 <body>
 
-<!-- ===================== TOAST CONTAINER ===================== -->
 <div id="toast-container"></div>
 
-<!-- ===================== PAGE LOADER ===================== -->
 <div class="page-loader hidden" id="page-loader">
   <div class="loader-ring"></div>
   <p>Loading…</p>
 </div>
 
-<!-- ===================== HIDDEN IFRAME FOR GAS COMMUNICATION ===================== -->
-<iframe name="gasFrame" style="display:none;"></iframe>
-
-
-
-<!-- ============================================================
-     SCREEN 1 — LOGIN
-     ============================================================ -->
 <section class="screen active" id="screen-login">
   <div class="login-card">
     <div class="login-logo">
@@ -825,11 +769,7 @@ tbody td {
   </div>
 </section>
 
-<!-- ============================================================
-     SCREEN 2 — USER DASHBOARD
-     ============================================================ -->
 <section class="screen" id="screen-user">
-  <!-- Sidebar -->
   <nav class="sidebar" id="sidebar-user">
     <div class="sidebar-header">
       <div class="sidebar-avatar" id="user-avatar-sidebar">U</div>
@@ -858,16 +798,13 @@ tbody td {
   </nav>
   <div class="sidebar-overlay" id="overlay-user"></div>
 
-  <!-- Topbar (mobile) -->
   <header class="topbar" id="topbar-user">
     <button class="topbar-menu-btn" id="topbar-menu-user">☰</button>
     <h2 id="topbar-title-user">Dashboard</h2>
     <div class="topbar-avatar" id="topbar-avatar-user">U</div>
   </header>
 
-  <!-- Main -->
   <main class="main-content">
-    <!-- TAB: Dashboard Overview -->
     <div class="tab-page active" id="tab-user-dashboard">
       <div class="page-header">
         <div>
@@ -898,7 +835,6 @@ tbody td {
           <div class="stat-sub">average</div>
         </div>
       </div>
-      <!-- Recent Transactions -->
       <div class="card">
         <div class="card-header">
           <h3>📋 Recent Transactions</h3>
@@ -922,7 +858,6 @@ tbody td {
       </div>
     </div>
 
-    <!-- TAB: Add Entry -->
     <div class="tab-page" id="tab-user-add">
       <div class="page-header">
         <div>
@@ -964,7 +899,6 @@ tbody td {
       </div>
     </div>
 
-    <!-- TAB: History -->
     <div class="tab-page" id="tab-user-history">
       <div class="page-header">
         <div>
@@ -1002,11 +936,7 @@ tbody td {
   </main>
 </section>
 
-<!-- ============================================================
-     SCREEN 3 — ADMIN DASHBOARD
-     ============================================================ -->
 <section class="screen" id="screen-admin">
-  <!-- Sidebar -->
   <nav class="sidebar" id="sidebar-admin">
     <div class="sidebar-header">
       <div class="sidebar-avatar" id="admin-avatar-sidebar">A</div>
@@ -1040,16 +970,13 @@ tbody td {
   </nav>
   <div class="sidebar-overlay" id="overlay-admin"></div>
 
-  <!-- Topbar (mobile) -->
   <header class="topbar" id="topbar-admin">
     <button class="topbar-menu-btn" id="topbar-menu-admin">☰</button>
     <h2 id="topbar-title-admin">Overview</h2>
     <div class="topbar-avatar" id="topbar-avatar-admin">A</div>
   </header>
 
-  <!-- Main -->
   <main class="main-content">
-    <!-- TAB: Admin Overview -->
     <div class="tab-page active" id="tab-admin-dashboard">
       <div class="page-header">
         <div>
@@ -1080,7 +1007,6 @@ tbody td {
           <div class="stat-sub">current month</div>
         </div>
       </div>
-      <!-- Recent + User Summary -->
       <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:20px; align-items:start;">
         <div class="card">
           <div class="card-header"><h3>📋 Recent Activity</h3></div>
@@ -1105,7 +1031,6 @@ tbody td {
       </div>
     </div>
 
-    <!-- TAB: All Transactions -->
     <div class="tab-page" id="tab-admin-transactions">
       <div class="page-header">
         <div>
@@ -1141,7 +1066,6 @@ tbody td {
       </div>
     </div>
 
-    <!-- TAB: Admin Add Transaction -->
     <div class="tab-page" id="tab-admin-add">
       <div class="page-header">
         <div>
@@ -1185,7 +1109,6 @@ tbody td {
       </div>
     </div>
 
-    <!-- TAB: Manage Users -->
     <div class="tab-page" id="tab-admin-users">
       <div class="page-header">
         <div>
@@ -1206,10 +1129,6 @@ tbody td {
   </main>
 </section>
 
-<!-- ============================================================
-     MODALS
-     ============================================================ -->
-<!-- Edit Transaction Modal -->
 <div class="modal-overlay hidden" id="modal-edit">
   <div class="modal">
     <div class="modal-header">
@@ -1248,7 +1167,6 @@ tbody td {
   </div>
 </div>
 
-<!-- Add User Modal -->
 <div class="modal-overlay hidden" id="modal-add-user">
   <div class="modal">
     <div class="modal-header">
@@ -1281,7 +1199,6 @@ tbody td {
   </div>
 </div>
 
-<!-- Confirm Delete Modal -->
 <div class="modal-overlay hidden" id="modal-confirm">
   <div class="modal">
     <div class="modal-header">
@@ -1299,7 +1216,6 @@ tbody td {
   </div>
 </div>
 
-<!-- Add Reminder Modal -->
 <div class="modal-overlay hidden" id="modal-add-reminder">
   <div class="modal">
     <div class="modal-header">
@@ -1329,75 +1245,35 @@ tbody td {
   </div>
 </div>
 
-<!-- ============================================================
-     APP JAVASCRIPT
-     ============================================================ -->
 <script>
-// ================================================================
-// API CALL WRAPPER
-// ================================================================
-// Replace this URL with your deployed Google Apps Script Web App URL
-const API_URL = "https://script.google.com/macros/s/AKfycbwgF1YKPn9em-R6erkdIPpxt94i1PUtB_TvPxtyUkxRfuusOXIwkfFkHlNmIds8bABUFQ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzJv5xo7uQJQSrnu_2qhhYUbQZZTnkPUPZhAAAuOny5Gj9Ou8jvQMGS7UahdbMXqEXclg/exec";
 
-// ================================================================
-// API CALL WRAPPER (IFRAME + FORM SUBMIT + POSTMESSAGE)
-// ================================================================
-function apiCall(payload) {
-  return new Promise((resolve, reject) => {
-
-    const requestId = Date.now() + "_" + Math.random();
-
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = API_URL;
-    form.target = "gasFrame";
-
-    function addField(name, value) {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = name;
-      input.value = value;
-      form.appendChild(input);
-    }
-
-    addField("payload", JSON.stringify(payload));
-    addField("postMessage", "true");
-    addField("requestId", requestId);
-    addField("origin", window.location.origin);
-
-    function onMessage(e) {
-      let msg = e.data;
+async function apiCall(payload) {
+  console.log("🚀 API Call:", payload.action, payload);
+  
+  try {
+    const formData = new FormData();
+    formData.append('payload', JSON.stringify(payload));
     
-      try {
-        if (typeof msg === 'string') msg = JSON.parse(msg);
-      } catch (_) {
-        return;
-      }
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      body: formData
+    });
     
-      if (msg && msg.requestId == id) {
-        window.removeEventListener('message', onMessage);
-        resolve(msg.data);
-      }
-    }
-
-
-    window.addEventListener("message", onMessage);
-
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-
-    setTimeout(() => {
-      window.removeEventListener("message", onMessage);
-      reject("Timeout");
-    }, 20000);
-  });
+    const text = await response.text();
+    console.log("📥 Raw Response:", text);
+    
+    const data = JSON.parse(text);
+    console.log("📥 Parsed Response:", data);
+    
+    return data;
+    
+  } catch (error) {
+    console.error("❌ API Error:", error);
+    throw error;
+  }
 }
 
-
-// ================================================================
-// GLOBAL APP STATE
-// ================================================================
 let appState = {
   token:        null,
   username:     null,
@@ -1406,9 +1282,6 @@ let appState = {
   users:        []
 };
 
-// ================================================================
-// TOAST
-// ================================================================
 function showToast(msg, type = 'info') {
   const icons = { success:'✓', error:'✕', warning:'⚠', info:'ℹ' };
   const container = document.getElementById('toast-container');
@@ -1419,16 +1292,10 @@ function showToast(msg, type = 'info') {
   setTimeout(() => toast.remove(), 3200);
 }
 
-// ================================================================
-// PAGE LOADER
-// ================================================================
 function showLoader(show) {
   document.getElementById('page-loader').classList.toggle('hidden', !show);
 }
 
-// ================================================================
-// MODAL HELPERS
-// ================================================================
 function openModal(id)  { document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
@@ -1441,17 +1308,11 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
   });
 });
 
-// ================================================================
-// SCREEN SWITCHER
-// ================================================================
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-// ================================================================
-// SIDEBAR / NAV (shared logic)
-// ================================================================
 function initSidebar(screenId) {
   const sidebar = screenId === 'screen-user' ? document.getElementById('sidebar-user') : document.getElementById('sidebar-admin');
   const overlay = screenId === 'screen-user' ? document.getElementById('overlay-user') : document.getElementById('overlay-admin');
@@ -1467,21 +1328,14 @@ function initSidebar(screenId) {
   });
 }
 
-// ================================================================
-// TAB SWITCHING
-// ================================================================
 function switchUserTab(tabName) {
-  // deactivate all tabs & nav items in user screen
   document.querySelectorAll('#screen-user .tab-page').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('#screen-user .nav-item').forEach(n => n.classList.remove('active'));
-  // activate target
   document.getElementById('tab-' + tabName).classList.add('active');
   document.querySelectorAll('#screen-user .nav-item').forEach(n => { if (n.dataset.tab === tabName) n.classList.add('active'); });
   document.getElementById('topbar-title-user').textContent = tabName.includes('add') ? 'Add Entry' : tabName.includes('history') ? 'History' : 'Dashboard';
-  // close mobile sidebar
   document.getElementById('sidebar-user').classList.remove('open');
   document.getElementById('overlay-user').classList.remove('show');
-  // refresh data
   if (tabName === 'user-history') renderUserHistory();
   if (tabName === 'user-dashboard') loadUserDashboard();
 }
@@ -1494,14 +1348,12 @@ function switchAdminTab(tabName) {
   document.getElementById('topbar-title-admin').textContent = titles[tabName] || 'Admin';
   document.getElementById('sidebar-admin').classList.remove('open');
   document.getElementById('overlay-admin').classList.remove('show');
-  // refresh
   if (tabName === 'admin-dashboard') loadAdminDashboard();
   if (tabName === 'admin-transactions') renderAdminTransactions();
   if (tabName === 'admin-users') renderAdminUsers();
   if (tabName === 'admin-add') populateAdminAddUserSelect();
 }
 
-// Nav clicks
 document.querySelectorAll('#screen-user .nav-item').forEach(el => {
   el.addEventListener('click', () => switchUserTab(el.dataset.tab));
 });
@@ -1509,9 +1361,6 @@ document.querySelectorAll('#screen-admin .nav-item').forEach(el => {
   el.addEventListener('click', () => switchAdminTab(el.dataset.tab));
 });
 
-// ================================================================
-// LOGIN
-// ================================================================
 document.getElementById('btn-login').addEventListener('click', async () => {
   const btn = document.getElementById('btn-login');
   const username = document.getElementById('login-username').value.trim();
@@ -1539,19 +1388,16 @@ document.getElementById('btn-login').addEventListener('click', async () => {
       showToast(data.message || 'Login failed.', 'error');
     }
   } catch (e) {
+    console.error('Login error:', e);
     showToast('Network error. Check your connection.', 'error');
   }
   btn.classList.remove('loading');
 });
 
-// Enter key on password
 document.getElementById('login-password').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') document.getElementById('btn-login').click();
 });
 
-// ================================================================
-// LOGOUT
-// ================================================================
 function logout() {
   appState = { token: null, username: null, role: null, transactions: [], users: [] };
   document.getElementById('login-username').value = '';
@@ -1562,20 +1408,14 @@ function logout() {
 document.getElementById('btn-logout-user').addEventListener('click', logout);
 document.getElementById('btn-logout-admin').addEventListener('click', logout);
 
-// ================================================================
-// FORMAT HELPERS
-// ================================================================
 const fmt = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(Number(val) || 0);
 
-// ================= DATE ENGINE (SAFE PATCH) =================
 function normalizeDate(val) {
   if (!val) return '';
   if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(val)) {
-    return val; // already correct
+    return val;
   }
   
-  // Handle Date objects or other string formats safely
-  // We explicitly use LOCAL time components to avoid timezone shifting
   const d = (val instanceof Date) ? val : new Date(val);
   
   if (!isNaN(d.getTime())) {
@@ -1606,10 +1446,6 @@ function today() {
   return `${year}-${month}-${day}`;
 }
 
-// ================================================================
-// REMINDERS FEATURE
-// ================================================================
-
 document.getElementById('btn-save-reminder').addEventListener('click', async () => {
   const item = document.getElementById('reminder-item').value.trim();
   const date = document.getElementById('reminder-date').value;
@@ -1632,7 +1468,6 @@ document.getElementById('btn-save-reminder').addEventListener('click', async () 
     if (data.success) {
       showToast('Reminder added!', 'success');
       closeModal('modal-add-reminder');
-      // Clear form
       document.getElementById('reminder-item').value = '';
       document.getElementById('reminder-date').value = '';
       document.getElementById('reminder-notes').value = '';
@@ -1640,6 +1475,7 @@ document.getElementById('btn-save-reminder').addEventListener('click', async () 
       showToast(data.message, 'error');
     }
   } catch (e) {
+    console.error('Add reminder error:', e);
     showToast('Network error.', 'error');
   }
   showLoader(false);
@@ -1652,13 +1488,13 @@ async function checkReminders() {
   try {
     const data = await apiCall({ action: 'get_reminders', token: appState.token });
     if (data.success && data.reminders) {
-      const todayDate = today(); // uses existing helper
+      const todayDate = today();
       const due = data.reminders.filter(r => r.reminder_date === todayDate);
       
       if (due.length > 0) {
         due.forEach(r => {
           const div = document.createElement('div');
-          div.className = 'toast info'; // reuse toast style or custom
+          div.className = 'toast info';
           div.style.position = 'static';
           div.style.transform = 'none';
           div.style.width = '100%';
@@ -1666,7 +1502,7 @@ async function checkReminders() {
           div.style.display = 'flex';
           div.style.alignItems = 'center';
           div.style.justifyContent = 'flex-start';
-          div.style.backgroundColor = '#e3f2fd'; // Light blue
+          div.style.backgroundColor = '#e3f2fd';
           div.style.color = '#0d47a1';
           div.style.border = '1px solid #bbdefb';
           
@@ -1686,21 +1522,10 @@ async function checkReminders() {
   }
 }
 
-// Inject into User Dashboard Load
-const _original_loadUserDashboard = loadUserDashboard;
-loadUserDashboard = async function() {
-  if (_original_loadUserDashboard) await _original_loadUserDashboard();
-  await checkReminders();
-};
-
-
 function currentMonth() {
   return today().slice(0, 7);
 }
 
-// ================================================================
-// USER DASHBOARD
-// ================================================================
 function initUserUI() {
   const initials = appState.username.charAt(0).toUpperCase();
   document.getElementById('user-avatar-sidebar').textContent  = initials;
@@ -1719,7 +1544,7 @@ async function loadUserDashboard() {
         ...t,
         date: normalizeDate(t.date)
       }));
-      // Stats
+      
       const total   = appState.transactions.reduce((s,t) => s + Number(t.total), 0);
       const count   = appState.transactions.length;
       const mon     = currentMonth();
@@ -1732,7 +1557,6 @@ async function loadUserDashboard() {
       document.getElementById('user-stat-month').textContent   = fmt(monthAmt);
       document.getElementById('user-stat-avg').textContent     = fmt(avg);
 
-      // Recent (last 6)
       const recent = [...appState.transactions].slice(-6).reverse();
       const tbody  = document.getElementById('user-recent-tbody');
       const empty  = document.getElementById('user-recent-empty');
@@ -1742,7 +1566,6 @@ async function loadUserDashboard() {
         empty.classList.remove('hidden'); 
       } else {
         empty.classList.add('hidden');
-        // Optimized rendering with data-label for mobile responsiveness
         tbody.innerHTML = recent.map(t => `<tr>
           <td data-label="Date">${formatDateDDMMYYYY(t.date)}</td>
           <td data-label="Item">${escHtml(t.item_name)}</td>
@@ -1751,12 +1574,17 @@ async function loadUserDashboard() {
           <td data-label="Notes" style="color:var(--clr-text-mid); max-width:150px; overflow:hidden; text-overflow:ellipsis;">${escHtml(t.notes)}</td>
         </tr>`).join('');
       }
+    } else {
+      showToast(data.message || 'Failed to load transactions', 'error');
     }
-  } catch(e) { showToast('Failed to load data.', 'error'); }
+    await checkReminders();
+  } catch(e) { 
+    console.error('Load user dashboard error:', e);
+    showToast('Failed to load data.', 'error'); 
+  }
   showLoader(false);
 }
 
-// --- Render full history with search/filter ---
 function renderUserHistory() {
   const search = document.getElementById('user-search').value.toLowerCase();
   const date   = document.getElementById('user-filter-date').value;
@@ -1774,7 +1602,6 @@ function renderUserHistory() {
   }
   
   empty.classList.add('hidden');
-  // Optimized rendering with data-label
   tbody.innerHTML = list.slice().reverse().map(t => `<tr>
     <td data-label="Date">${formatDateDDMMYYYY(t.date)}</td>
     <td data-label="Item">${escHtml(t.item_name)}</td>
@@ -1786,7 +1613,6 @@ function renderUserHistory() {
 document.getElementById('user-search').addEventListener('input', renderUserHistory);
 document.getElementById('user-filter-date').addEventListener('change', renderUserHistory);
 
-// --- Add Entry ---
 document.getElementById('btn-add-entry').addEventListener('click', async () => {
   const item  = document.getElementById('new-item-name').value.trim();
   const rate  = document.getElementById('new-rate').value;
@@ -1804,16 +1630,17 @@ document.getElementById('btn-add-entry').addEventListener('click', async () => {
     });
     if (data.success) {
       showToast('Entry added successfully!', 'success');
-      // clear form
       document.getElementById('new-item-name').value = '';
       document.getElementById('new-rate').value      = '';
       document.getElementById('new-total').value     = '';
       document.getElementById('new-notes').value     = '';
       document.getElementById('new-date').value      = today();
-      // refresh
       loadUserDashboard();
     } else { showToast(data.message, 'error'); }
-  } catch(e) { showToast('Network error.', 'error'); }
+  } catch(e) { 
+    console.error('Add transaction error:', e);
+    showToast('Network error.', 'error'); 
+  }
   showLoader(false);
 });
 document.getElementById('btn-clear-form').addEventListener('click', () => {
@@ -1821,9 +1648,6 @@ document.getElementById('btn-clear-form').addEventListener('click', () => {
   document.getElementById('new-date').value = today();
 });
 
-// ================================================================
-// ADMIN DASHBOARD
-// ================================================================
 function initAdminUI() {
   const initials = appState.username.charAt(0).toUpperCase();
   document.getElementById('admin-avatar-sidebar').textContent  = initials;
@@ -1836,20 +1660,26 @@ function initAdminUI() {
 async function loadAdminDashboard() {
   showLoader(true);
   try {
-    // Fetch users + transactions in parallel
     const [txnRes, userRes] = await Promise.all([
       apiCall({ action:'get_transactions', token: appState.token }),
       apiCall({ action:'get_users', token: appState.token })
     ]);
+    
     if (txnRes.success) {
       appState.transactions = txnRes.transactions.map(t => ({
         ...t,
         date: normalizeDate(t.date)
       }));
+    } else {
+      showToast(txnRes.message || 'Failed to load transactions', 'error');
     }
-    if (userRes.success) appState.users = userRes.users;
+    
+    if (userRes.success) {
+      appState.users = userRes.users;
+    } else {
+      showToast(userRes.message || 'Failed to load users', 'error');
+    }
 
-    // Stats
     const total    = appState.transactions.reduce((s,t) => s + Number(t.total), 0);
     const mon      = currentMonth();
     const monthAmt = appState.transactions.filter(t => String(t.date).startsWith(mon)).reduce((s,t) => s + Number(t.total), 0);
@@ -1859,7 +1689,6 @@ async function loadAdminDashboard() {
     document.getElementById('admin-stat-total').textContent  = fmt(total);
     document.getElementById('admin-stat-month').textContent  = fmt(monthAmt);
 
-    // Recent (last 8)
     const recent = [...appState.transactions].slice(-8).reverse();
     const tbody  = document.getElementById('admin-recent-tbody');
     const empty  = document.getElementById('admin-recent-empty');
@@ -1877,7 +1706,6 @@ async function loadAdminDashboard() {
       </tr>`).join('');
     }
 
-    // User summary sidebar
     const sumContainer = document.getElementById('admin-user-summary');
     sumContainer.innerHTML = appState.users.map(u => {
       const cnt = appState.transactions.filter(t => t.user === u.username).length;
@@ -1888,16 +1716,17 @@ async function loadAdminDashboard() {
       </div>`;
     }).join('');
 
-    // Populate user filter dropdown
     const sel = document.getElementById('admin-filter-user');
     sel.innerHTML = '<option value="">All Users</option>';
     appState.users.forEach(u => { sel.innerHTML += `<option value="${u.username}">${u.username}</option>`; });
 
-  } catch(e) { showToast('Failed to load admin data.', 'error'); }
+  } catch(e) { 
+    console.error('Load admin dashboard error:', e);
+    showToast('Failed to load admin data.', 'error'); 
+  }
   showLoader(false);
 }
 
-// --- Admin Transactions Table ---
 function renderAdminTransactions() {
   const search = document.getElementById('admin-search').value.toLowerCase();
   const user   = document.getElementById('admin-filter-user').value;
@@ -1936,7 +1765,6 @@ document.getElementById('admin-search').addEventListener('input', renderAdminTra
 document.getElementById('admin-filter-user').addEventListener('change', renderAdminTransactions);
 document.getElementById('admin-filter-date').addEventListener('change', renderAdminTransactions);
 
-// --- Edit Modal ---
 function openEditModal(index) {
   const t = appState.transactions[index];
   if (!t) return;
@@ -1968,13 +1796,15 @@ document.getElementById('btn-save-edit').addEventListener('click', async () => {
       await loadAdminDashboard();
       renderAdminTransactions();
     } else { showToast(data.message, 'error'); }
-  } catch(e) { showToast('Network error.', 'error'); }
+  } catch(e) { 
+    console.error('Edit transaction error:', e);
+    showToast('Network error.', 'error'); 
+  }
   showLoader(false);
 });
 
-// --- Delete Confirm ---
 let pendingDeleteId = null;
-let pendingConfirmType = null; // 'delete_transaction' | 'remove_user'
+let pendingConfirmType = null;
 let pendingRemoveUser  = null;
 
 function confirmDelete(id, name) {
@@ -2020,11 +1850,13 @@ document.getElementById('btn-confirm-action').addEventListener('click', async ()
         renderAdminUsers();
       } else { showToast(data.message, 'error'); }
     }
-  } catch(e) { showToast('Network error.', 'error'); }
+  } catch(e) { 
+    console.error('Confirm action error:', e);
+    showToast('Network error.', 'error'); 
+  }
   showLoader(false);
 });
 
-// --- Admin Add Transaction ---
 function populateAdminAddUserSelect() {
   const sel = document.getElementById('admin-add-user');
   sel.innerHTML = '<option value="">Select user</option>';
@@ -2042,13 +1874,10 @@ document.getElementById('btn-admin-add-entry').addEventListener('click', async (
 
   showLoader(true);
   try {
-    // Admin adds on behalf — we call add_transaction but override user in backend.
-    // Since backend uses session.username, we make a special payload.
-    // For simplicity: we store the selected user directly. The backend trusts admin token.
     const data = await apiCall({
       action:'add_transaction', token: appState.token,
       date, item_name: item, rate, total, notes,
-      override_user: user   // backend will use this if present and role=admin
+      override_user: user
     });
     if (data.success) {
       showToast('Transaction added for ' + user + '!', 'success');
@@ -2057,7 +1886,10 @@ document.getElementById('btn-admin-add-entry').addEventListener('click', async (
       document.getElementById('admin-add-user').value = '';
       await loadAdminDashboard();
     } else { showToast(data.message, 'error'); }
-  } catch(e) { showToast('Network error.', 'error'); }
+  } catch(e) { 
+    console.error('Admin add transaction error:', e);
+    showToast('Network error.', 'error'); 
+  }
   showLoader(false);
 });
 document.getElementById('btn-admin-clear-form').addEventListener('click', () => {
@@ -2065,10 +1897,14 @@ document.getElementById('btn-admin-clear-form').addEventListener('click', () => 
   document.getElementById('admin-add-date').value = today();
 });
 
-// --- Manage Users ---
 async function renderAdminUsers() {
-  const data = await apiCall({ action:'get_users', token: appState.token });
-  if (data.success) appState.users = data.users;
+  try {
+    const data = await apiCall({ action:'get_users', token: appState.token });
+    if (data.success) appState.users = data.users;
+  } catch(e) {
+    console.error('Render admin users error:', e);
+  }
+  
   const container = document.getElementById('admin-users-list');
   const empty     = document.getElementById('admin-users-empty');
   
@@ -2080,7 +1916,7 @@ async function renderAdminUsers() {
   
   empty.classList.add('hidden');
   container.innerHTML = appState.users.map(u => {
-    const canDelete = u.username !== appState.username; // can't delete self
+    const canDelete = u.username !== appState.username;
     return `<div class="user-item">
       <div class="user-item-avatar">${u.username.charAt(0).toUpperCase()}</div>
       <div class="user-item-info">
@@ -2109,43 +1945,28 @@ document.getElementById('btn-create-user').addEventListener('click', async () =>
       document.getElementById('new-user-role').value = 'user';
       await renderAdminUsers();
     } else { showToast(data.message, 'error'); }
-  } catch(e) { showToast('Network error.', 'error'); }
+  } catch(e) { 
+    console.error('Create user error:', e);
+    showToast('Network error.', 'error'); 
+  }
   showLoader(false);
 });
 
-// ================================================================
-// XSS GUARD
-// ================================================================
 function escHtml(str) {
   if (str === null || str === undefined) return '';
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
-// ================================================================
-// ADMIN override_user support — patch Code.gs handleAddTransaction
-// (The frontend sends override_user; backend must honor it.)
-// This is handled in the updated Code.gs below.
-// ================================================================
-
-// ================================================================
-// INIT
-// ================================================================
-// Set today's date on page load
 document.getElementById('new-date').value = today();
 document.getElementById('admin-add-date').value = today();
 
-// ================================================================
-// EXPORT DATA FEATURE
-// ================================================================
 document.getElementById('btn-admin-export').addEventListener('click', () => {
-  // 1. Get current filters (replicating renderAdminTransactions logic)
   const search = document.getElementById('admin-search').value.toLowerCase();
   const user   = document.getElementById('admin-filter-user').value;
   const date   = document.getElementById('admin-filter-date').value;
   
   let list = appState.transactions || [];
   
-  // Apply filters
   if (search) list = list.filter(t => t.item_name.toLowerCase().includes(search) || (t.notes||'').toLowerCase().includes(search) || t.user.toLowerCase().includes(search));
   if (user)   list = list.filter(t => t.user === user);
   if (date)   list = list.filter(t => t.date === date);
@@ -2155,7 +1976,6 @@ document.getElementById('btn-admin-export').addEventListener('click', () => {
     return;
   }
 
-  // 2. Format data for Excel (reverse to match table order: newest first)
   const exportData = list.slice().reverse().map(t => ({
     Date: t.date,
     User: t.user,
@@ -2165,12 +1985,10 @@ document.getElementById('btn-admin-export').addEventListener('click', () => {
     Notes: t.notes
   }));
 
-  // 3. Generate Workbook using SheetJS
   const ws = XLSX.utils.json_to_sheet(exportData);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
-  // 4. Download file
   const filename = `KhataBook_Export_${today()}.xlsx`;
   XLSX.writeFile(wb, filename);
   
