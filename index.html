@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>KhataBook — Ledger App</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
   <!-- SheetJS for Excel Export -->
@@ -793,8 +794,10 @@ tbody td {
   <p>Loading…</p>
 </div>
 
-<!-- Persistent iframe for Google Apps Script communication -->
+<!-- ===================== HIDDEN IFRAME FOR GAS COMMUNICATION ===================== -->
 <iframe name="gasFrame" style="display:none;"></iframe>
+
+
 
 <!-- ============================================================
      SCREEN 1 — LOGIN
@@ -1336,73 +1339,69 @@ tbody td {
 // Replace this URL with your deployed Google Apps Script Web App URL
 const API_URL = "https://script.google.com/macros/s/AKfycbwgF1YKPn9em-R6erkdIPpxt94i1PUtB_TvPxtyUkxRfuusOXIwkfFkHlNmIds8bABUFQ/exec";
 
-// Modified to connect to deployed Apps Script Web App
+// ================================================================
+// API CALL WRAPPER (IFRAME + FORM SUBMIT + POSTMESSAGE)
+// ================================================================
 function apiCall(payload) {
   return new Promise((resolve, reject) => {
-    const id = 'req_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    const form = document.createElement('form');
-    form.method = 'POST';
+
+    const requestId = Date.now() + "_" + Math.random();
+
+    const form = document.createElement("form");
+    form.method = "POST";
     form.action = API_URL;
     form.target = "gasFrame";
-    form.enctype = 'application/x-www-form-urlencoded';
-    const inputPayload = document.createElement('input');
-    inputPayload.type = 'hidden';
-    inputPayload.name = 'payload';
-    inputPayload.value = JSON.stringify(payload);
-    const inputPM = document.createElement('input');
-    inputPM.type = 'hidden';
-    inputPM.name = 'postMessage';
-    inputPM.value = '1';
-    const inputReq = document.createElement('input');
-    inputReq.type = 'hidden';
-    inputReq.name = 'requestId';
-    inputReq.value = id;
-    const inputOrigin = document.createElement('input');
-    inputOrigin.type = 'hidden';
-    inputOrigin.name = 'origin';
-    inputOrigin.value =  "*";
-    form.appendChild(inputPayload);
-    form.appendChild(inputPM);
-    form.appendChild(inputReq);
-    form.appendChild(inputOrigin);
-    document.body.appendChild(form);
-    let done = false;
-    function cleanup() {
-      if (form.parentNode) form.parentNode.removeChild(form);
-      window.removeEventListener('message', onMessage);
+
+    function addField(name, value) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
     }
-    function onMessage(ev) {
-      let data = ev.data;
-      if (typeof data === 'string') {
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          return;
-        }
-      }
-      if (data && data.id === id) {
-        done = true;
-        cleanup();
-        resolve(data.data);
+
+    addField("payload", JSON.stringify(payload));
+    addField("postMessage", "true");
+    addField("requestId", requestId);
+    addField("origin", window.location.origin);
+
+    function onMessage(e) {
+      if (!e.origin.includes("googleusercontent.com")) return;
+
+      let msg = e.data;
+      try {
+        if (typeof msg === "string") msg = JSON.parse(msg);
+      } catch (_) { return; }
+
+      if (msg.requestId === requestId) {
+        window.removeEventListener("message", onMessage);
+        resolve(msg.data);
       }
     }
 
-    window.addEventListener('message', onMessage);
-    const timer = setTimeout(() => {
-      if (done) return;
-      cleanup();
-      reject(new Error('Network error.'));
-    }, 200);
+    window.addEventListener("message", onMessage);
+
+    document.body.appendChild(form);
     form.submit();
+    document.body.removeChild(form);
+
+    setTimeout(() => {
+      window.removeEventListener("message", onMessage);
+      reject("Timeout");
+    }, 20000);
   });
 }
 
+
+// ================================================================
+// GLOBAL APP STATE
+// ================================================================
 let appState = {
   token:        null,
   username:     null,
   role:         null,
-  transactions: [],   // cached from API
-  users:        []    // cached (admin)
+  transactions: [],
+  users:        []
 };
 
 // ================================================================
